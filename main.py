@@ -38,14 +38,16 @@ def get_all_books(skip: int = 0, limit: int = 10):
     return {"data": books}
 
 @app.get("/books/{book_id}")
-def get_book_by_id(book_id: str):
+def get_book_by_id(book_id: str, current_user: schema.UserBase = Depends(get_current_user)):
     book = crud_service.get_book_by_id(book_id)
     if not book:
         return {"message": "Book not found"}
-    return {"data": book}
+    if current_user["id"] == book["user_id"]:
+        return {"data": book}
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, deatil="you are not authorised to access this resourse")
 
 @app.put("/books/{book_id}")
-def update_book(book_id: str, book_data: schema.BookUpdate):
+def update_book(book_id: str,  book_data: schema.BookUpdate):
     book = crud_service.update_book(book_id, book_data)
     if not book:
         raise HTTPException(detail="Book not found", status_code=status.HTTP_400_BAD_REQUEST)
@@ -57,3 +59,4 @@ def delete_book(book_id: str):
     if not result:
         raise HTTPException(detail="Book not found", status_code=status.HTTP_400_BAD_REQUEST)
     return {"message": "Book deleted successfully!"}
+
