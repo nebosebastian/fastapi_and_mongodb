@@ -14,7 +14,7 @@ from crud import user_crud_service
 load_dotenv()
 
 SECRET_KEY = os.environ.get('SECRET_KEY')  # Change this in production
-ALGORITHM = os.environ.get('ALGORITHM')
+ALGORITHM = os.environ.get('ALGORITHM') # Change this in production
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES', 30))
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

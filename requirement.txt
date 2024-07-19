@@ -1,0 +1,10 @@
+fastapi
+pydantic
+uvicorn
+passlib
+bcrypt
+httpx
+pymongo
+python-jose
+sqlalchemy
+python-detenv
